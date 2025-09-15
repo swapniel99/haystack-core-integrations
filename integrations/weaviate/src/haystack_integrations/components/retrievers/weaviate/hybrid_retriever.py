@@ -115,9 +115,11 @@ class WeaviateHybridRetriever:
             The maximum vector distance for vector part of hybrid retrieval.
         """
         filters = apply_filter_policy(self._filter_policy, self._filters, filters)
-        top_k = top_k or self._top_k
-        alpha = alpha or self._alpha
-        max_vector_distance = max_vector_distance or self._max_vector_distance
+        top_k = self._top_k if top_k is None else top_k
+        alpha = self._alpha if alpha is None else alpha
+        max_vector_distance = (
+            self._max_vector_distance if max_vector_distance is None else max_vector_distance
+        )
 
         documents = self._document_store._hybrid_retrieval(
             query=query,
